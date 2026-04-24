@@ -1,0 +1,11 @@
+﻿.venv/
+__pycache__/
+.cache/
+data/raw/
+data/processed/
+outputs/
+*.safetensors
+*.bin
+*.pt
+*.ckpt
+*.zip

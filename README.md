@@ -105,3 +105,19 @@ Main run configuration:
 
 The project successfully demonstrates a complete Vision-Language Modeling pipeline using VK open data. The model was trained, evaluated, and documented. The final result shows moderate accuracy and provides a reproducible foundation for future improvement using larger datasets, stronger models, and improved prompting strategies.
 "@ | Out-File -Encoding utf8 README.md
+
+
+@"
+
+## Trained Model Outputs
+
+The trained model outputs are included in this repository as:
+
+outputs_full.zip
+
+This archive contains:
+- trained model adapter
+- evaluation outputs
+- generated result files
+
+"@ | Add-Content README.md

@@ -1,101 +1,16 @@
 @"
-# VK Vision-Language Modeling Project
-
-## Project Overview
-
-This project was completed as part of a VK project task on Vision-Language Modeling. The aim was to train and evaluate a visual question answering model using open data provided by VK.
-
-The project focuses on training a lightweight Vision-Language Model to answer Russian-language questions about images.
-
-## Project Goal
-
-The goal of the project is to fine-tune a pre-trained Vision-Language Model using VK open datasets and evaluate its performance on a visual question answering task.
-
-## Dataset Used
-
-Dataset: deepvk/GQA-ru
-
-The GQA-ru dataset contains image-question-answer pairs in Russian. It was used for both training and evaluation.
-
-Main experiment:
-
-- Training samples: 8000
-- Evaluation samples: 500
-- Evaluation test sample size: 50
-
-## Model Used
-
-Base model:
-
-HuggingFaceTB/SmolVLM-256M-Instruct
-
-Training method:
-
-LoRA fine-tuning
-
-## Hardware
-
-Training was performed locally using:
-
-- NVIDIA RTX 4050 GPU
-- Visual Studio Code
-- Python
-- PyTorch
-- Hugging Face Transformers
-- Hugging Face Datasets
-- TRL
-- PEFT
-
-## Training Configuration
-
-- Epochs: 2
-- Batch size: 1
-- Gradient accumulation: 8
-- Image size: 384
-- Optimizer: AdamW
-- Training type: GPU-based LoRA fine-tuning
-
-## Main Result
-
-The trained model was evaluated on 50 samples.
-
-Results:
-
-- Exact Match: 0.28
-- Normalized Exact Match: 0.28
-
-## Additional Experiment
-
-A second pilot experiment was conducted with modified label masking.
-
-Configuration:
-
-- Training samples: 2000
-- Evaluation samples: 200
-- Epochs: 1
-
-Result:
-
-- Exact Match: 0.20
-- Normalized Exact Match: 0.20
-
-The 8000-sample main run was therefore treated as the main experimental result.
-
-## Project Structure
-
-vk_vlm_project/
-
-- scripts/ — training, testing, and evaluation scripts
-- reports/ — final project report
-- requirements.txt — Python dependencies
-- README.md — project description
-
-Large folders such as data/raw, data/processed, outputs, and model files are excluded from GitHub because of file size limits.
-
-## How to Run
-
-Create and activate a virtual environment:
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+torch
+torchvision
+torchaudio
+transformers
+datasets
+huggingface_hub
+accelerate
+trl
+peft
+pillow
+pandas
+pyarrow
+scikit-learn
+tensorboard
+"@ | Out-File -Encoding utf8 requirements.txt

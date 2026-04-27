@@ -3,136 +3,112 @@
 
 ## Overview
 
-This project was completed as part of a VK practical task on Vision-Language Modeling (VLM). The objective was to train and evaluate a multimodal model capable of answering Russian-language questions based on image input.
+This project was completed as part of the VK practical task on Vision-Language Modeling. The aim was to train and evaluate a visual question answering model using VK open data.
 
-The project replicates a real-world machine learning workflow using VK open datasets and demonstrates practical implementation of a visual question answering system.
+The model receives an image and a Russian-language question about that image, then generates an answer in Russian.
 
----
+## Training Process
 
-## Project Goal
+The model was not trained from scratch. I used fine-tuning of a pre-trained vision-language model:
 
-The goal of this project is to fine-tune a Vision-Language Model using VK open datasets and evaluate its performance on a visual question answering (VQA) task.
+`HuggingFaceTB/SmolVLM-256M-Instruct`
 
----
+Fine-tuning was done using LoRA (Low-Rank Adaptation). This approach was selected because it allows efficient training on limited local GPU resources.
 
-## Dataset
+Training was performed locally in Visual Studio Code using an NVIDIA RTX 4050 GPU.
 
-Dataset used:
+## Dataset Used
 
-- `deepvk/GQA-ru`
+The main dataset used was VK’s open dataset:
 
-The dataset consists of image-question-answer pairs in Russian and is designed for VQA tasks.
+`deepvk/GQA-ru`
 
-Main experimental setup:
+This dataset is available on Hugging Face and contains Russian image-question-answer pairs for visual question answering.
 
-- Training samples: 8,000  
-- Evaluation samples: 500  
-- Final evaluation subset: 50  
+For the main experiment, I used:
 
----
+- Training samples: 8,000
+- Evaluation samples: 500
+- Final tested samples: 50
 
-## Model
-
-Base model:
-
-- `HuggingFaceTB/SmolVLM-256M-Instruct`
-
-Training approach:
-
-- LoRA (Low-Rank Adaptation) fine-tuning  
-- GPU-based training  
-
-Hardware used:
-
-- NVIDIA RTX 4050 GPU  
-
----
+The full dataset was not uploaded to GitHub because of its large size. The `GQA-ru` dataset is approximately 3.97 GB. GitHub normal uploads are limited to 100 MB per file, and large files require Git LFS. Since the dataset is already publicly available on Hugging Face, this repository includes scripts for downloading and preparing it locally instead of duplicating the full dataset.
 
 ## Training Configuration
 
-Main run configuration:
+Main experiment configuration:
 
-- Epochs: 2  
-- Batch size: 1  
-- Gradient accumulation: 8  
-- Image size: 384  
-- Optimizer: AdamW  
-- Fine-tuning method: LoRA  
+- Base model: `HuggingFaceTB/SmolVLM-256M-Instruct`
+- Dataset: `deepvk/GQA-ru`
+- Fine-tuning method: LoRA
+- Epochs: 2
+- Batch size: 1
+- Gradient accumulation: 8
+- Image size: 384
+- Optimizer: AdamW
+- Hardware: NVIDIA RTX 4050 GPU
 
----
+## Quality Metrics
 
-## Results
+The model was evaluated using:
 
-Main experiment (8,000 samples):
+- Exact Match
+- Normalized Exact Match
 
-- Exact Match: 0.28  
-- Normalized Exact Match: 0.28  
+Exact Match checks whether the model answer is exactly the same as the correct answer.
 
-Additional experiment (pilot, 2,000 samples):
+Normalized Exact Match compares answers after basic text normalization.
 
-- Exact Match: 0.20  
+## Main Result
 
-The 8,000-sample run produced the best performance and is considered the final result.
+The main 8,000-sample experiment achieved:
 
----
+- Exact Match: 0.28
+- Normalized Exact Match: 0.28
+
+This result was selected as the main project result.
+
+## Comparative Analysis
+
+I also tested an additional pilot configuration with modified label masking.
+
+Pilot experiment:
+
+- Training samples: 2,000
+- Evaluation samples: 200
+- Exact Match: 0.20
+
+The pilot experiment performed lower than the main experiment. Therefore, the 8,000-sample LoRA fine-tuning run was treated as the stronger and final result.
 
 ## Repository Contents
 
 This repository includes:
 
-- training scripts  
-- dataset preparation scripts  
-- evaluation and testing scripts  
-- project documentation  
-- trained model outputs archive  
+- training scripts
+- dataset preparation scripts
+- testing scripts
+- evaluation scripts
+- requirements file
+- trained outputs archive
 
----
-
-## Trained Model Outputs
-
-The trained model outputs are included in this repository as:
+The trained outputs are included as:
 
 `outputs_full.zip`
 
-This archive contains:
-
-- trained model adapter  
-- evaluation outputs  
-- generated prediction results  
-
----
+This archive contains the trained model adapter, evaluation outputs, and generated result files.
 
 ## Main Scripts
 
-- `scripts/download_datasets.py` — downloads VK datasets  
-- `scripts/prepare_gqa_subset.py` — prepares subsets  
-- `scripts/train_gqa_smolvlm.py` — model training  
-- `scripts/test_gqa_model.py` — sample testing  
-- `scripts/evaluate_gqa_model.py` — evaluation  
-- `scripts/check_gpu.py` — GPU check  
-- `scripts/check_data.py` — dataset validation  
-
----
-
-## Implementation Summary
-
-The project was implemented in Visual Studio Code using Python. The dataset was downloaded from Hugging Face, processed into subsets, and used to fine-tune a pre-trained multimodal model.
-
-Training was performed on a local GPU using LoRA to reduce memory usage. The model was evaluated using exact match metrics.
-
----
+- `scripts/download_datasets.py` — downloads VK datasets from Hugging Face
+- `scripts/check_data.py` — checks downloaded dataset folders
+- `scripts/check_gpu.py` — checks GPU availability
+- `scripts/prepare_gqa_subset.py` — prepares training and evaluation subsets
+- `scripts/train_gqa_smolvlm.py` — fine-tunes the model
+- `scripts/test_gqa_model.py` — tests the trained model on individual samples
+- `scripts/evaluate_gqa_model.py` — evaluates the trained model
 
 ## Conclusion
 
-The project successfully demonstrates a full Vision-Language Modeling pipeline using VK open data.
+The project demonstrates a complete Vision-Language Modeling pipeline using VK open data. It includes dataset preparation, LoRA fine-tuning, GPU training, evaluation, and comparison between two training configurations.
 
-Key outcomes:
-
-- functional training pipeline  
-- successful GPU-based fine-tuning  
-- measurable evaluation results  
-- reproducible workflow  
-
-The model achieves moderate accuracy and provides a strong foundation for future improvements using larger datasets, more powerful models, and improved training strategies.
-
+The main result shows that the fine-tuned model achieved moderate performance, and future improvements may include training on more samples, using a larger model, and improving the prompting or evaluation strategy.
 "@ | Out-File -Encoding utf8 README.md
